@@ -1,3 +1,7 @@
+## [0.9.0]
+### Changed
+- Relaxed the type of `modify` to allow a different return type
+
 ## [0.8.1]
 ### Changed
 - Changed `Cache`s to use bitmasks instead of the remainder operation. This makes caches up to three times faster.
