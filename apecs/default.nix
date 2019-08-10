@@ -3,7 +3,7 @@
 }:
 mkDerivation {
   pname = "apecs";
-  version = "0.8.1";
+  version = "0.9.0";
   src = ./.;
   libraryHaskellDepends = [
     base containers mtl template-haskell vector
