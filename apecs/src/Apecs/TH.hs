@@ -2,7 +2,10 @@
 {-# LANGUAGE TypeFamilies    #-}
 
 module Apecs.TH
-  ( makeWorld, makeWorldNoEC, makeWorldAndComponents
+  ( makeWorld
+  , makeWorldNoEC
+  , makeWorldAndComponents
+  , makeComponents
   ) where
 
 import Control.Monad
@@ -54,11 +57,15 @@ makeComponent comp = do
   let ct = return$ ConT comp
   head <$> [d| instance Component $ct where type Storage $ct = Map $ct |]
 
+-- | Give a list of names a `Component` instance with `Storage c = Map c`
+makeComponents :: [Name] -> Q [Dec]
+makeComponents = traverse makeComponent
+
 -- | Same as makeWorld, but also defines @Component@ instances with a @Map@ store.
 makeWorldAndComponents :: String -> [Name] -> Q [Dec]
 makeWorldAndComponents worldName cTypes = do
   wdecls <- makeWorld worldName cTypes
-  cdecls <- mapM makeComponent cTypes
+  cdecls <- makeComponents cTypes
   return $ wdecls ++ cdecls
 
 {-|

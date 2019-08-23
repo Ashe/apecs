@@ -176,5 +176,5 @@ instance (MonadIO m, Ix c, Bounded c) => Reacts m (IxMap c) where
 
 {-# INLINE ixLookup #-}
 ixLookup :: (MonadIO m, Ix c) => c -> IxMap c -> m [Entity]
-ixLookup c = \(IxMap ref) -> do
+ixLookup c = \(IxMap ref) ->
   liftIO $ fmap Entity . S.toList <$> A.readArray ref c
